@@ -326,7 +326,9 @@ public interface Document {
      * @see javax.swing.event.UndoableEditEvent
      * @see javax.swing.event.UndoableEditListener
      */
-    public void insertString(int offset, String str, AttributeSet a) throws BadLocationException;
+   //@requires offset >= 0;
+   //@requires offset < getLength();
+   public void insertString(int offset, String str, AttributeSet a) throws BadLocationException;
 
     /**
      * Fetches the text contained within the given portion
@@ -340,6 +342,10 @@ public interface Document {
      *   was not a valid part of the document.  The location in the exception
      *   is the first bad position encountered.
      */
+    //@requires offset >= 0;
+    //@requires offset < getLength();
+    //@requires length >= 0;
+    //@requires length < getLength();
     public String getText(int offset, int length) throws BadLocationException;
 
     /**

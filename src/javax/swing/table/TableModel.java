@@ -58,6 +58,7 @@ public interface TableModel
      * @return the number of rows in the model
      * @see #getColumnCount
      */
+	//@ requires true;
     public int getRowCount();
 
     /**
@@ -68,6 +69,7 @@ public interface TableModel
      * @return the number of columns in the model
      * @see #getRowCount
      */
+    //@ requires true;
     public int getColumnCount();
 
     /**
@@ -111,6 +113,10 @@ public interface TableModel
      * @param   columnIndex     the column whose value is to be queried
      * @return  the value Object at the specified cell
      */
+    //@ requires row >= 0;
+    //@ requires row < getRowCount();
+    //@ requires column >= 0;
+    //@ requires column < getColumnCount();
     public Object getValueAt(int rowIndex, int columnIndex);
 
     /**

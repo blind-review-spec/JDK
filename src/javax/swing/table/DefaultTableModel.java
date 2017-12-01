@@ -459,6 +459,8 @@ public class DefaultTableModel extends AbstractTableModel implements Serializabl
      * @param   row      the row index of the row to be removed
      * @exception  ArrayIndexOutOfBoundsException  if the row was invalid
      */
+    //@ requires row >= 0;
+    //@ requires row < getRowCount();
     public void removeRow(int row) {
         dataVector.removeElementAt(row);
         fireTableRowsDeleted(row, row);
@@ -591,6 +593,7 @@ public class DefaultTableModel extends AbstractTableModel implements Serializabl
      * Returns the number of rows in this data table.
      * @return the number of rows in the model
      */
+    //@ requires true;
     public int getRowCount() {
         return dataVector.size();
     }
@@ -599,6 +602,7 @@ public class DefaultTableModel extends AbstractTableModel implements Serializabl
      * Returns the number of columns in this data table.
      * @return the number of columns in the model
      */
+    //@ requires true;
     public int getColumnCount() {
         return columnIdentifiers.size();
     }
@@ -645,6 +649,10 @@ public class DefaultTableModel extends AbstractTableModel implements Serializabl
      * @exception  ArrayIndexOutOfBoundsException  if an invalid row or
      *               column was given
      */
+    //@ requires row >= 0;
+    //@ requires row < getRowCount();
+    //@ requires column >= 0;
+    //@ requires column < getColumnCount();
     public Object getValueAt(int row, int column) {
         Vector rowVector = (Vector)dataVector.elementAt(row);
         return rowVector.elementAt(column);
@@ -661,6 +669,10 @@ public class DefaultTableModel extends AbstractTableModel implements Serializabl
      * @exception  ArrayIndexOutOfBoundsException  if an invalid row or
      *               column was given
      */
+    //@ requires row >= 0;
+    //@ requires row < getRowCount();
+    //@ requires column >= 0;
+    //@ requires column < getColumnCount();
     public void setValueAt(Object aValue, int row, int column) {
         Vector rowVector = (Vector)dataVector.elementAt(row);
         rowVector.setElementAt(aValue, column);

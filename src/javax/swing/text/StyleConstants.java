@@ -409,6 +409,7 @@ public class StyleConstants {
      * @param a the attribute set
      * @param b specifies true/false for setting the attribute
      */
+    //@requires a != null;
     public static void setBold(MutableAttributeSet a, boolean b) {
         a.addAttribute(Bold, Boolean.valueOf(b));
     }

@@ -338,6 +338,7 @@ public class JTableHeader extends JComponent implements TableColumnModelListener
      * @return  the index of the column that <code>point</code> lies in, or -1 if it
      *          lies out of bounds
      */
+    //@ requires point != null;
     public int columnAtPoint(Point point) {
         int x = point.x;
         if (!getComponentOrientation().isLeftToRight()) {
@@ -531,6 +532,7 @@ public class JTableHeader extends JComponent implements TableColumnModelListener
      * @return  the <code>columnModel</code> property
      * @see     #setColumnModel
      */
+    //@ requires true;
     public TableColumnModel getColumnModel() {
         return columnModel;
     }
