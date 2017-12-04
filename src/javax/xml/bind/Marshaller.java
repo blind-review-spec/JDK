@@ -380,6 +380,7 @@ public interface Marshaller {
      * @throws IllegalArgumentException
      *      If any of the method parameters are null
      */
+    //@ requires jaxbElement != null && result != null;
     public void marshal( Object jaxbElement, javax.xml.transform.Result result )
         throws JAXBException;
 

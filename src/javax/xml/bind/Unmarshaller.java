@@ -428,6 +428,7 @@ public interface Unmarshaller {
      * @throws IllegalArgumentException
      *      If the file parameter is null
      */
+	//@ requires f != null; 
     public Object unmarshal( java.io.File f ) throws JAXBException;
 
     /**
@@ -733,6 +734,7 @@ public interface Unmarshaller {
      *      If any parameter is null
      * @since JAXB2.0
      */
+    //@ requires reader != null && declaredType != null;
     public <T> JAXBElement<T> unmarshal( javax.xml.stream.XMLStreamReader reader, Class<T> declaredType ) throws JAXBException;
 
     /**

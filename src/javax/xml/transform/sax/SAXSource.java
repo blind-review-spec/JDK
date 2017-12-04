@@ -189,6 +189,7 @@ public class SAXSource implements Source {
      *
      * @return An InputSource, or null if Source can not be converted.
      */
+    //@ requires true;
     public static InputSource sourceToInputSource(Source source) {
 
         if (source instanceof SAXSource) {

@@ -65,6 +65,7 @@ public interface XMLEvent extends javax.xml.stream.XMLStreamConstants {
    * @see #END_DOCUMENT
    * @see #DTD
    */
+  //@ requires true;
   public int getEventType();
 
   /**
@@ -79,6 +80,7 @@ public interface XMLEvent extends javax.xml.stream.XMLStreamConstants {
    * A utility function to check if this event is a StartElement.
    * @see StartElement
    */
+  //@ requires true;
   public boolean isStartElement();
 
   /**
@@ -98,6 +100,7 @@ public interface XMLEvent extends javax.xml.stream.XMLStreamConstants {
    * A utility function to check if this event is a EndElement.
    * @see EndElement
    */
+  //@ requires true;
   public boolean isEndElement();
 
   /**
@@ -116,6 +119,7 @@ public interface XMLEvent extends javax.xml.stream.XMLStreamConstants {
    * A utility function to check if this event is Characters.
    * @see Characters
    */
+  //@ requires true;
   public boolean isCharacters();
 
   /**
@@ -134,18 +138,21 @@ public interface XMLEvent extends javax.xml.stream.XMLStreamConstants {
    * Returns this event as a start element event, may result in
    * a class cast exception if this event is not a start element.
    */
+  //@ requires isStartElement();
   public StartElement asStartElement();
 
   /**
    * Returns this event as an end  element event, may result in
    * a class cast exception if this event is not a end element.
    */
+  //@ requires isEndElement();
   public EndElement asEndElement();
 
   /**
    * Returns this event as Characters, may result in
    * a class cast exception if this event is not Characters.
    */
+  //@ requires isCharacters();
   public Characters asCharacters();
 
   /**

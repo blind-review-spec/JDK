@@ -103,6 +103,8 @@ public abstract class Transformer {
      * @throws TransformerException If an unrecoverable error occurs
      *   during the course of the transformation.
      */
+    //@ requires xmlSource != null;
+    //@ requires outputTarget != null;
     public abstract void transform(Source xmlSource, Result outputTarget)
         throws TransformerException;
 

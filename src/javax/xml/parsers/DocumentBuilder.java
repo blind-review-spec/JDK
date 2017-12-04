@@ -166,7 +166,7 @@ public abstract class DocumentBuilder {
      *
      * @see org.xml.sax.DocumentHandler
      */
-
+    //@ requires uri != null;
     public Document parse(String uri)
         throws SAXException, IOException {
         if (uri == null) {
@@ -192,7 +192,7 @@ public abstract class DocumentBuilder {
      * @see org.xml.sax.DocumentHandler
      * @return A new DOM Document object.
      */
-
+    //@ requires f != null;
     public Document parse(File f) throws SAXException, IOException {
         if (f == null) {
             throw new IllegalArgumentException("File cannot be null");

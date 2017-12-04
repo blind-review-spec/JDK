@@ -202,6 +202,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @throws NoSuchElementException if this is called when hasNext() returns false
    * @throws XMLStreamException  if there is an error processing the underlying XML source
    */
+  //@ requires hasNext();
   public int next() throws XMLStreamException;
 
   /**
@@ -213,6 +214,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @param localName the localName of the event, may be null
    * @throws XMLStreamException if the required values are not matched.
    */
+  //@ requires type == getEventType();
   public void require(int type, String namespaceURI, String localName) throws XMLStreamException;
 
   /**
@@ -258,6 +260,8 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @throws XMLStreamException if the current event is not a START_ELEMENT
    * or if a non text element is encountered
    */
+  //@ requires isStartElement();
+  //@ requires next != isStartElement || requires next != END_DOCUMENT;
   public String getElementText() throws XMLStreamException;
 
   /**
@@ -296,6 +300,8 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * START_ELEMENT or END_ELEMENT
    * @throws NoSuchElementException if this is called when hasNext() returns false
    */
+  //@ requires hasNext();
+  //@ requires isStartElement() || isEndElement() || getEventType() == SPACE || getEventType() == PROCESSING_INSTRUCTION;
   public int nextTag() throws XMLStreamException;
 
   /**
@@ -306,6 +312,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @return true if there are more events, false otherwise
    * @throws XMLStreamException if there is a fatal error detecting the next state
    */
+  //@ requires true;
   public boolean hasNext() throws XMLStreamException;
 
   /**
@@ -313,6 +320,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * underlying input source.
    * @throws XMLStreamException if there are errors freeing associated resources
    */
+  //@ requires true;
   public void close() throws XMLStreamException;
 
   /**
@@ -335,18 +343,21 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * Returns true if the cursor points to a start tag (otherwise false)
    * @return true if the cursor points to a start tag, false otherwise
    */
+  //@ requires true;
   public boolean isStartElement();
 
   /**
    * Returns true if the cursor points to an end tag (otherwise false)
    * @return true if the cursor points to an end tag, false otherwise
    */
+  //@ requires true;
   public boolean isEndElement();
 
   /**
    * Returns true if the cursor points to a character data event
    * @return true if the cursor points to character data, false otherwise
    */
+  //@ requires true;
   public boolean isCharacters();
 
   /**
@@ -367,6 +378,8 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @return returns the value of the attribute , returns null if not found
    * @throws IllegalStateException if this is not a START_ELEMENT or ATTRIBUTE
    */
+  //@ requires localName != null;
+  //@ requires isStartElement() || getEventType() == ATTRIBUTE;
   public String getAttributeValue(String namespaceURI,
                                   String localName);
 
@@ -378,6 +391,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @return returns the number of attributes
    * @throws IllegalStateException if this is not a START_ELEMENT or ATTRIBUTE
    */
+  //@ requires isStartElement() || getEventType() == ATTRIBUTE;
   public int getAttributeCount();
 
   /** Returns the qname of the attribute at the provided index
@@ -386,6 +400,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @return the QName of the attribute
    * @throws IllegalStateException if this is not a START_ELEMENT or ATTRIBUTE
    */
+  //@ requires isStartElement() || getEventType() == ATTRIBUTE;
   public QName getAttributeName(int index);
 
   /**
@@ -395,6 +410,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @return the namespace URI (can be null)
    * @throws IllegalStateException if this is not a START_ELEMENT or ATTRIBUTE
    */
+  //@ requires isStartElement() || getEventType() == ATTRIBUTE;
   public String getAttributeNamespace(int index);
 
   /**
@@ -404,6 +420,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @return the localName of the attribute
    * @throws IllegalStateException if this is not a START_ELEMENT or ATTRIBUTE
    */
+  //@ requires isStartElement() || getEventType() == ATTRIBUTE;
   public String getAttributeLocalName(int index);
 
   /**
@@ -413,6 +430,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @return the prefix of the attribute
    * @throws IllegalStateException if this is not a START_ELEMENT or ATTRIBUTE
    */
+  //@ requires isStartElement() || getEventType() == ATTRIBUTE;
   public String getAttributePrefix(int index);
 
   /**
@@ -422,6 +440,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @return the XML type of the attribute
    * @throws IllegalStateException if this is not a START_ELEMENT or ATTRIBUTE
    */
+  //@ requires isStartElement() || getEventType() == ATTRIBUTE;
   public String getAttributeType(int index);
 
   /**
@@ -431,6 +450,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @return the attribute value
    * @throws IllegalStateException if this is not a START_ELEMENT or ATTRIBUTE
    */
+  //@ requires isStartElement() || getEventType() == ATTRIBUTE;
   public String getAttributeValue(int index);
 
   /**
@@ -451,6 +471,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @return returns the number of namespace declarations on this specific element
    * @throws IllegalStateException if this is not a START_ELEMENT, END_ELEMENT or NAMESPACE
    */
+  //@ requires isStartElement() || isEndElement() || getEventType() == NAMESPACE;
   public int getNamespaceCount();
 
   /**
@@ -462,6 +483,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @return returns the namespace prefix
    * @throws IllegalStateException if this is not a START_ELEMENT, END_ELEMENT or NAMESPACE
    */
+  //@ requires isStartElement() || isEndElement() || getEventType() == NAMESPACE;
   public String getNamespacePrefix(int index);
 
   /**
@@ -472,6 +494,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @return returns the namespace uri
    * @throws IllegalStateException if this is not a START_ELEMENT, END_ELEMENT or NAMESPACE
    */
+  //@ requires isStartElement() || isEndElement() || getEventType() == NAMESPACE;
   public String getNamespaceURI(int index);
 
   /**
@@ -480,6 +503,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * a call to next() changes the state of the reader.
    * @return return a namespace context
    */
+  //@ requires true;
   public NamespaceContext getNamespaceContext();
 
   /**
@@ -503,6 +527,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * Returns an integer code that indicates the type
    * of the event the cursor is pointing to.
    */
+  //@ requires true;
   public int getEventType();
 
   /**
@@ -518,6 +543,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @throws java.lang.IllegalStateException if this state is not
    * a valid text state.
    */
+  //@ requires isCharacters() || getEventType() == CDATA || getEventType() == SPACE || getEventType() == COMMENT || getEventType() == ENTITY_REFERENCE || getEventType() == DTD;
   public String getText();
 
   /**
@@ -530,6 +556,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @throws java.lang.IllegalStateException if this state is not
    * a valid text state.
    */
+  //@ requires isCharacters() || getEventType() == CDATA || getEventType() == SPACE || getEventType() == COMMENT;
   public char[] getTextCharacters();
 
   /**
@@ -591,6 +618,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @throws java.lang.IllegalStateException if this state is not
    * a valid text state.
    */
+  //@ requires isCharacters() || getEventType() == CDATA || getEventType() == SPACE || getEventType() == COMMENT; 
   public int getTextStart();
 
   /**
@@ -599,12 +627,14 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @throws java.lang.IllegalStateException if this state is not
    * a valid text state.
    */
+  //@ requires isCharacters() || getEventType() == CDATA || getEventType() == SPACE || getEventType() == COMMENT;
   public int getTextLength();
 
   /**
    * Return input encoding if known or null if unknown.
    * @return the encoding of this instance or null
    */
+  //@ requires true;
   public String getEncoding();
 
   /**
@@ -622,6 +652,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * The location information is only valid until next() is
    * called.
    */
+  //@ requires true;
   public Location getLocation();
 
   /**
@@ -630,6 +661,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @throws IllegalStateException if this is not a START_ELEMENT or
    * END_ELEMENT
    */
+  //@ requires isStartElement() || isEndElement();
   public QName getName();
 
   /**
@@ -642,6 +674,7 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * @throws IllegalStateException if this not a START_ELEMENT,
    * END_ELEMENT or ENTITY_REFERENCE
    */
+  //@ requires isStartElement() || isEndElement() || getEventType() == ENTITY_REFERENCE;
   public String getLocalName();
 
   /**
@@ -656,12 +689,14 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * Returns null if the event does not have a prefix.
    * @return the URI bound to this elements prefix, the default namespace, or null
    */
+  //@ requires true;
   public String getNamespaceURI();
 
   /**
    * Returns the prefix of the current event or null if the event does not have a prefix
    * @return the prefix or null
    */
+  //@ requires true;
   public String getPrefix();
 
   /**
@@ -694,11 +729,13 @@ public interface XMLStreamReader extends XMLStreamConstants {
    * Get the target of a processing instruction
    * @return the target or null
    */
+  //@ requires getEventType() == PROCESSING_INSTRUCTION;
   public String getPITarget();
 
   /**
    * Get the data section of a processing instruction
    * @return the data or null
    */
+  //@ requires getEventType() == PROCESSING_INSTRUCTION;
   public String getPIData();
 }

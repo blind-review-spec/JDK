@@ -129,6 +129,7 @@ public abstract class SAXParser {
      *
      * @see org.xml.sax.DocumentHandler
      */
+    //@ requires is != null;    
     public void parse(InputStream is, HandlerBase hb)
         throws SAXException, IOException {
         if (is == null) {
